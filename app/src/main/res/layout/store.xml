@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+
+    <ImageView
+        android:layout_marginTop="70dp"
+        android:id="@+id/logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ck2"/>
+    <TextView
+        android:drawableTop="@drawable/store_icon"
+        android:textColor="#d61c0e"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/logo"
+        android:id="@+id/judul"
+        android:text="Store"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        tools:ignore="HardcodedText" />
+    <LinearLayout
+        android:layout_below="@+id/judul"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:background="@drawable/spiner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:orientation="vertical">
+
+            <Spinner
+                android:id="@+id/store_opt"
+                android:textAlignment="center"
+                android:transitionName="Select Store"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/submitStore"
+            android:background="@drawable/readbg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/store_opt"
+            android:text="Cari"
+            android:textColor="#fff"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp" />
+    </LinearLayout>
+</RelativeLayout>
