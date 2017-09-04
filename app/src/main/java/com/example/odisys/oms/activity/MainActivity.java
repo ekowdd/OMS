@@ -1,7 +1,9 @@
 package com.example.odisys.oms.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,13 +21,17 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.odisys.oms.Api.ApiUrl;
 import com.example.odisys.oms.R;
+import com.example.odisys.oms.dialog.EditAlertDialog;
 import com.example.odisys.oms.fragment.DashboardFragment;
 import com.example.odisys.oms.fragment.DetailProductFragmet;
 import com.example.odisys.oms.fragment.ProductFragment;
+import com.example.odisys.oms.fragment.ReportFinishFragment;
+import com.example.odisys.oms.fragment.RevisiFragment;
 import com.example.odisys.oms.fragment.StoreFragment;
 import com.example.odisys.oms.model.ProductModel;
 import com.example.odisys.oms.model.Users;
@@ -48,15 +54,19 @@ public class MainActivity extends AppCompatActivity
     URL mUrl;
     List<Users> list;
     static int CAMERA_REQEST = 0;
+    String nik = "";
+    SharedPreferences mPref;
     Activity mActivity;
+    TextView name, niks, email;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
+        mPref = getSharedPreferences("isLoggedIn", Context.MODE_PRIVATE);
+        nik = mPref.getString("nik", null);
         Fragment fragment = new DashboardFragment();
         setTitle("Home");
 
@@ -76,8 +86,11 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         View header = LayoutInflater.from(this)
                 .inflate(R.layout.nav_header_main, navigationView, false);
+        name = (TextView) header.findViewById(R.id.name);
+        niks = (TextView) header.findViewById(R.id.nik);
+        email = (TextView) header.findViewById(R.id.email);
         navigationView.addHeaderView(header);
-
+        new UserByNik().execute();
     }
 
     @Override
@@ -93,8 +106,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+//        getMenuInflater().inflate(R.menu.main, menu);
+        return false;
     }
 
     @Override
@@ -106,8 +119,9 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-           Intent i = new Intent(this, ScannerActivity.class);i.putExtra("type", "scanConfirm");
-            startActivityForResult(i, CAMERA_REQEST);
+//            Intent i = new Intent(this, ScannerActivity.class);
+//            i.putExtra("type", "scanConfirm");
+//            startActivityForResult(i, CAMERA_REQEST);
 
             return true;
         }
@@ -133,7 +147,7 @@ public class MainActivity extends AppCompatActivity
                     .replace(R.id.frame, fragment)
                     .commit();
             this.invalidateOptionsMenu();
-        } else if(id==R.id.store){
+        } else if (id == R.id.store) {
             setTitle("Product");
             fragment = new StoreFragment();
             fragmentManager = getSupportFragmentManager();
@@ -142,29 +156,29 @@ public class MainActivity extends AppCompatActivity
                     .addToBackStack(null)
                     .replace(R.id.frame, fragment)
                     .commit();
-        }else if(id == R.id.report){
+        } else if (id == R.id.report_I) {
             setTitle("Report");
-            Intent intent = new Intent(this,SOActivity.class);
-            startActivity(intent);
-        }else if (id == R.id.nav_send) {
-
-            Toast.makeText(getApplicationContext(),"Cyeee Masih Mahasiswa", Toast.LENGTH_SHORT).show();
-            fragment = new DetailProductFragmet();
+            fragment = new RevisiFragment();
             fragmentManager = getSupportFragmentManager();
             fragmentManager
                     .beginTransaction()
                     .addToBackStack(null)
-                    .replace(R.id.frame, fragment)
+                    .replace(R.id.frame,fragment)
                     .commit();
+        } else if(id==R.id.logout){
+            Intent i = new Intent(MainActivity.this,LoginActivity.class);
+            startActivity(i);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    private class UserByNik extends AsyncTask<Void,Void,String>{
+
+    private class UserByNik extends AsyncTask<Void, Void, String> {
         JSONObject obj;
         JSONArray arr;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -172,18 +186,15 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         protected String doInBackground(Void... params) {
-            String url = "";
             try {
 
-                mUrl = new URL(ApiUrl.URL_USER);
+                mUrl = new URL(ApiUrl.GET_USER + "?nik=" + nik);
             } catch (IOException e) {
                 e.printStackTrace();
                 return e.toString();
             }
             try {
                 con = (HttpURLConnection) mUrl.openConnection();
-                url = mUrl.getQuery();
-                url.replaceAll("","%20");
                 con.setConnectTimeout(15000);
                 con.setReadTimeout(10000);
                 con.setRequestMethod("GET");
@@ -220,7 +231,13 @@ public class MainActivity extends AppCompatActivity
             list = new ArrayList<Users>();
             try {
                 obj = new JSONObject(sb);
-                
+                arr = obj.getJSONArray("msg");
+                for (int i = 0; i < arr.length(); i++) {
+                    JSONObject mObj = arr.getJSONObject(i);
+                    name.setText(mObj.getString("nik"));
+                    niks.setText(mObj.getString("nama_lengkap"));
+                    email.setText(mObj.getString("email"));
+                }
             } catch (Exception ec) {
                 ec.printStackTrace();
             }

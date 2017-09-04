@@ -3,6 +3,7 @@ package com.example.odisys.oms.adapter;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.v7.widget.RecyclerView;
@@ -12,8 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.odisys.oms.Api.ApiUrl;
 import com.example.odisys.oms.R;
+import com.example.odisys.oms.activity.ScrollingActivity;
 import com.example.odisys.oms.model.ProductModel;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
@@ -47,15 +51,24 @@ public class ProductFrontAdapter extends RecyclerView.Adapter<ProductFrontAdapte
     public void onBindViewHolder(ProductFrontAdapter.ViewHolder holder, int position) {
 
         Picasso.with(mView.getContext())
-                .load(list.get(position).getImgs())
+                .load(ApiUrl.PHOTO_PATH + list.get(position).getNama_file())
                 .placeholder(R.drawable.circle_k)
-                .resize(800,600)
+                .resize(300,200)
                 .into(holder.mImg);
 //        holder.mImg.setImageResource(list.get(position).getImgs());
         holder.productName.setText(list.get(position).getProduct_name());
         holder.productCode.setText(list.get(position).getProduct_code());
+        holder.toSOpname.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ScrollingActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                v.getContext().startActivity(intent);
+            }
+        });
 
     }
+
 
     @Override
     public int getItemCount() {
@@ -67,11 +80,12 @@ public class ProductFrontAdapter extends RecyclerView.Adapter<ProductFrontAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView mImg;
+        ImageView mImg,toSOpname;
         TextView productName, productCode;
         public ViewHolder(View itemView) {
             super(itemView);
             mImg = (ImageView)itemView.findViewById(R.id.image_v);
+            toSOpname = (ImageView)itemView.findViewById(R.id.toSOpname);
             productName = (TextView)itemView.findViewById(R.id.pName);
             productCode = (TextView)itemView.findViewById(R.id.pCode);
         }

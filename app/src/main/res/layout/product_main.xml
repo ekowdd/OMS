@@ -23,18 +23,11 @@
         app:floatingSearch_showSearchKey="false"
         app:floatingSearch_suggestionsListAnimDuration="250" />
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:padding="10dp"
-        android:id="@+id/swep"
-        android:layout_marginTop="65dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rcyc_view"
+            android:padding="10dp"
+            android:layout_marginTop="65dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
         </android.support.v7.widget.RecyclerView>
-    </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>

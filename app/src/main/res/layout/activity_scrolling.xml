@@ -27,7 +27,8 @@
                 android:src="@drawable/premium"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_collapseMode="parallax"/>
+                app:layout_collapseMode="parallax"
+                tools:ignore="ContentDescription" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"

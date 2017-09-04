@@ -9,7 +9,7 @@ android {
     }
     defaultConfig {
         applicationId "com.example.odisys.oms"
-        minSdkVersion 19
+        minSdkVersion 17
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -44,4 +44,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.github.vipulasri:timelineview:1.0.5'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'pub.devrel:easypermissions:0.4.2'
 }

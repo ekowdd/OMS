@@ -11,15 +11,19 @@
             android:icon="@drawable/ic_chrome"
             android:title="Store" />
         <item
-            android:id="@+id/report"
+            android:id="@+id/report_I"
             android:icon="@drawable/ic_local_library"
-            android:title="Report" />
+            android:title="Report I" />
+        <item
+            android:id="@+id/report_II"
+            android:icon="@drawable/ic_local_library"
+            android:title="Report II" />
     </group>
 
     <item android:title="Communicate">
         <menu>
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/logout"
                 android:icon="@drawable/logout"
                 android:title="Logout" />
         </menu>

@@ -1,8 +1,10 @@
 package com.example.odisys.oms.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -11,8 +13,13 @@ import android.widget.RelativeLayout;
 
 import com.example.odisys.oms.R;
 
-public class SplashActitvty extends AppCompatActivity {
+import java.util.List;
 
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
+
+public class SplashActitvty extends AppCompatActivity implements EasyPermissions.PermissionCallbacks{
+    private static final int CEK_PERMISSON = 123;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +29,32 @@ public class SplashActitvty extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
         );
         setContentView(R.layout.activity_splash_actitvty);
+        onChekPermissionTask();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        onChekPermissionTask();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
+    }
+
+    public void onChekPermissionTask(){
+        String[] mParamsPermission = {Manifest.permission.CAMERA};
+
+        if (EasyPermissions.hasPermissions(this,mParamsPermission)){
+            SplashApp();
+        }else {
+            EasyPermissions.requestPermissions(this,getString(R.string.returned_from_app_settings_to_activity),CEK_PERMISSON,mParamsPermission);
+        }
+    }
+
+    private void SplashApp(){
         Thread thread = new Thread(){
             @Override
             public void run() {
@@ -44,8 +77,16 @@ public class SplashActitvty extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        finish();
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+        Log.d("SplasScreen", "onPermissionGranted : " + requestCode + ":" + perms.size());
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        Log.d("SplasScreen", "onPermissionGranted : " + requestCode + ":" + perms.size());
+
+        if (EasyPermissions.somePermissionPermanentlyDenied(this,perms)){
+            new AppSettingsDialog.Builder(this).build().show();
+        }
     }
 }

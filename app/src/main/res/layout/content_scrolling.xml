@@ -14,7 +14,6 @@
         android:background="@drawable/linbg"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin">
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,7 +54,7 @@
                 android:text="18 Feb 2017" />
 
             <TextView
-                android:id="@+id/text_view"
+                android:id="@+id/p_Name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -68,11 +67,11 @@
                 tools:ignore="NotSibling" />
 
             <TextView
-                android:id="@+id/barcode"
+                android:id="@+id/pNames"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/text_view"
-                android:layout_below="@+id/text_view"
+                android:layout_alignStart="@+id/p_Name"
+                android:layout_below="@+id/p_Name"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="11dp"
                 android:text="Product Name"
@@ -104,7 +103,7 @@
                 android:background="@android:color/darker_gray" />
 
             <TextView
-                android:id="@+id/text_view_durasi_item_jadwal_kereta_api"
+                android:id="@+id/pCodes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Product Code"
@@ -120,7 +119,7 @@
                 android:id="@+id/view_line_horizontal_bawah"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@+id/text_view_durasi_item_jadwal_kereta_api"
+                android:layout_below="@+id/pCodes"
                 android:layout_marginLeft="15dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="8dp"
@@ -165,9 +164,9 @@
                 android:background="@android:color/darker_gray" />
 
 
-            <EditText
+            <TextView
                 android:id="@+id/barcodes"
-                android:layout_width="180dp"
+                android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:textSize="14sp"
                 android:textAlignment="center"
@@ -178,18 +177,6 @@
                 android:layout_marginTop="8dp"
                 android:layout_toEndOf="@+id/view_circle"
                 android:layout_toRightOf="@+id/view_circle"/>
-            <View
-                android:id="@+id/view_scan"
-                android:layout_width="40dp"
-                android:layout_height="35dp"
-                android:textAlignment="center"
-                android:background="@drawable/ic_menu_camera"
-                android:layout_below="@+id/view_line_horizontal_atas_2"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="8dp"
-                android:layout_toEndOf="@+id/barcodes"
-                android:layout_toRightOf="@+id/barcodes"/>
 
             <View
                 android:id="@+id/view_line_horizontal_bawah_2"
@@ -262,6 +249,7 @@
                 android:background="@android:color/darker_gray" />
 
             <Button
+                android:id="@+id/Submit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/view_line_horizontal_bawah_3"

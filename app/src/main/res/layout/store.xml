@@ -18,7 +18,7 @@
         android:layout_marginTop="10dp"
         android:layout_below="@+id/logo"
         android:id="@+id/judul"
-        android:text="Store"
+        android:text="STORE"
         android:gravity="center"
         android:textSize="30sp"
         android:layout_width="match_parent"

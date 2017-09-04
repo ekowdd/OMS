@@ -25,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.odisys.oms.Api.ApiUrl;
 import com.example.odisys.oms.R;
 import com.example.odisys.oms.model.Users;
 
@@ -65,7 +66,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //            icon.setAnimation(ianimRotate);
             Intent i = new Intent(getApplicationContext(),MainActivity.class);
             startActivity(i);
-//            authuserLogin();
+            authuserLogin();
         }
     }
 
@@ -151,7 +152,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void loginAuthUser(){
         String url = "";
         showProgressDialog();
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, ApiUrl.URL_USER, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 dismissProgressDialog();
@@ -204,26 +205,4 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private void makeJsonrequest(){
-        String Urls = "";
-        JsonObjectRequest mRequest = new JsonObjectRequest(Request.Method.POST, Urls, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> doPostUser = new HashMap<>();
-
-                doPostUser.put("nik",username.getText().toString());
-                return doPostUser;
-            }
-        };
-    }
 }

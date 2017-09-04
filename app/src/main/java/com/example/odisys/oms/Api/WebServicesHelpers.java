@@ -9,10 +9,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-/**
- * Created by Odisys on 03/04/2017.
- */
-
 public class WebServicesHelpers {
     public static OkHttpClient mClient;
     public static void initialize(){
@@ -20,7 +16,7 @@ public class WebServicesHelpers {
         mClient.newBuilder().connectTimeout(200, TimeUnit.SECONDS).build();
     }
 
-    public static String doPost(String url, RequestBody mBody)throws IOException{
+    public static String doPost(String url, RequestBody mBody,String token)throws IOException{
 
         Headers headers = new Headers.Builder()
                 .add("Aurhorization","Basic")
@@ -34,7 +30,7 @@ public class WebServicesHelpers {
         return mResponse.body().string();
     }
 
-    public static String doGet(String url, String token)throws IOException{
+    public static String doGet(String url,  String token)throws IOException{
         Request mRequest = new Request.Builder()
                 .addHeader("Authorization","Basic " + token)
                 .url(url)
